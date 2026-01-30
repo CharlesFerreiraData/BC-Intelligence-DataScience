@@ -1,0 +1,10 @@
+pyspark
+requests
+fastapi
+uvicorn
+neo4j
+duckdb
+pandas
+matplotlib
+pyarrow
+scikit-learn

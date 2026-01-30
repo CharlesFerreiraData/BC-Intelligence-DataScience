@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # Motor Principal do Projeto BC (Ingestão, Spark, ML e API)
+  bc_engine:
+    build: .
+    container_name: bc_container
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - bc_graph_db
+
+  # Banco de Dados de Grafos para Inteligência do Banco Central
+  bc_graph_db:
+    image: neo4j:latest
+    container_name: bc_graph_db
+    ports:
+      - "7474:7474"  # Interface Web (Navegador)
+      - "7687:7687"  # Conexão do Python (Bolt)
+    environment:
+      - NEO4J_AUTH=neo4j/password123
+    volumes:
+      - bc_neo4j_data:/data
+
+volumes:
+  bc_neo4j_data:
